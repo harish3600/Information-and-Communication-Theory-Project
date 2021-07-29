@@ -5,8 +5,8 @@
 import random
 
 def BSC(codeword,p):
-    newcode = []
     n = len(codeword)
+    newcode = [0]*n
     for i in range(n):
         cur = random.random();
         if(cur<p):
@@ -14,13 +14,13 @@ def BSC(codeword,p):
                 newcode[i]=1
             elif(codeword[i]==1):
                 newcode[i]=0
+        else:
+            newcode[i] = codeword[i]
     return newcode
 
 
-n = 5
+n = 10
 k = 2
-p = 0.015
-code = []
 
 codeC = []
 cnt = 0
@@ -35,7 +35,33 @@ while(cnt<(2**k)):
 
 #    print(codeword)
 
-N = 100
-c = [[0,1,3,4,5],[0,1,2,4,5]]
+N = 5
+p = 0.1
 
-print(codeC)
+E = 0
+
+#print(codeC)
+for i in range(N):
+    cur = random.randint(0,(2**k)-1)
+    c = codeC[cur]
+    y = BSC(c,p)
+    mindiff = n+1;
+    estInd = 0
+    for t in range(2**k):
+        diff = 0
+        for ind in range(n):
+            if(y[ind]!=codeC[t][ind]):
+                diff += 1;
+        if diff<mindiff:
+            estInd = t
+            mindiff = diff
+    cEst = codeC[estInd]
+    if(cEst!=c):
+        E += 1
+    print("I ",i)
+    print("P ",c)
+    print("R ",y)
+    print("E ",cEst)
+    print('\n')
+
+print(E)
