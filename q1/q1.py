@@ -4,22 +4,32 @@ class Node:
         self.left = None
         self.right = None
 
-code = {}
-def Encode(node,st):
+encode = {}
+decode = {}
+
+def checkDiff(decoded, data):
+    if(decoded==data):
+        print("Strings are same")
+    else:
+        print("Strings are different")
+
+def Map(node,st):
     if node.right!=None:
-        Encode(node.right,st+'0')
+        Map(node.right,st+'0')
     if node.left!=None:
-        Encode(node.left,st+'1')
+        Map(node.left,st+'1')
     if node.right==None and node.left==None:
-        code[node.val] = st
+        encode[node.val] = st
+        decode[st] = node.val
 #        print(node.val, st)
 
-filename = "test.txt"
+filename = "file1.txt"
 
 textFile = open(filename, "r")
 data = textFile.read()
+data = data[:-1]
 freq = {}
-for r in range(len(data)-1):
+for r in range(len(data)):
     k = data[r]
     if k in freq:
         freq[k] += 1
@@ -55,16 +65,28 @@ for i in range(N-1):
     root = curNode;
 #    print(sum1)
 
-Encode(root,"")
+Map(root,"")
 #print(code)
 #print(root.right.val, root.left.left.val)
 print("Code:")
-for r in code:
-    print(r,' --- ', code[r])
+for r in encode:
+    print(r,' --- ', encode[r])
 output = "";
-for r in range(len(data)-1):
-    output += code[data[r]]
+for r in range(len(data)):
+    output += encode[data[r]]
 #print("Encoded String: ",output)
-filep = open("encoded.ari", "w")
+filep = open("encoded.txt", "w")
 filep.write(output)
-print("Encoded string written to encoded")
+print("Encoded string written to encoded.txt")
+#print(decode)
+
+outlen = len(output)
+cur = 0
+dec = ""
+for i in range(outlen+1):
+    if output[cur:i] in decode:
+        dec += decode[output[cur:i]]
+        cur = i
+#print(data)
+#print(dec)
+checkDiff(dec,data)
