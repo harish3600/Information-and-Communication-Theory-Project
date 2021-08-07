@@ -1,8 +1,7 @@
 #This is an interactive program. The user has to give the values for n,k,p while running based on the instructions given by the code
 
 #For the code used in plotting the additional plots and for the video presentation please
-#check this link
-#https://colab.research.google.com/drive/107lmFO7yYChbdyToJXiDzYSVsL8xlzke?usp=sharing
+#check this link https://colab.research.google.com/drive/107lmFO7yYChbdyToJXiDzYSVsL8xlzke?usp=sharing
 
 #Question 2: Error Probability of Random Codes over a BSC
 
