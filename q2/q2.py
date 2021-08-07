@@ -1,4 +1,15 @@
+#This is an interactive program. The user has to give the values for n,k,p while running based on the instructions given by the code
+
+#For the code used in plotting the additional plots and for the video presentation please
+#check this link
+#https://colab.research.google.com/drive/107lmFO7yYChbdyToJXiDzYSVsL8xlzke?usp=sharing
+
+#Question 2: Error Probability of Random Codes over a BSC
+
 import random
+import numpy as np
+import matplotlib.pyplot as plt
+
 def randomCodeConstructor(List): #Function to generate 2^k random codewords from {0,1}^n
     
     #Obtaining values of n,k,p from the list passed as parameter
@@ -100,17 +111,39 @@ def decoding(codeC, data):
     probabilityOfError = totalError / N
     return probabilityOfError
 
+#Data Array to store the user-input for (n,k,p)
+data = []
 
+#Taking user input for (n,k,p)
+print('Enter value for n')
+n = int(input())
+data.append(n)
 
-#data = [15, 10, 0.015]
+print('Enter value for k')
+k = int(input())
+data.append(k)
 
-print('Enter value for n,k,p')
-n = input()
-k = input()
-p = input()
+print('Enter value for p')
+p = float(input())
+data.append(p)
 
-codeC = randomCodeConstructor(data)
-probabilityOfError = decoding(codeC, data)
+#Assigning a large value temporarily for minimum Probability Of Error
+#minimumProbabilityOfError is updated when we get a code with lower probability
+minimumProbabilityOfError = 10
+      
+#Running the c0ode 5 times for 5 trials
+for j in range(5):
+    #Part 1: Random Code Construction
+    #randomCodeConstructor generates a random code of 2^k codewords, each of length n
+    codeC = randomCodeConstructor(data)
 
-print('The probability of Error for n = ' + n + ' k = ' + k + ' p = ' + p)
-print(probabilityOfError)
+    #Part 2: Decoding
+    #decoding function Calls BSC and decodes the recieved codeword from BSC
+    probabilityOfError = decoding(codeC, data)
+
+    #Updating minimumProbabilityOfError
+    minimumProbabilityOfError = min(minimumProbabilityOfError, probabilityOfError)
+
+print('The minimum probability of Error for n = ' , n , ' k = ' , k , ' p = ' , p)
+print ('%.3f' % minimumProbabilityOfError)
+print('\n')
